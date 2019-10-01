@@ -22,5 +22,5 @@ urlpatterns = [
     path('article/<int:pk>/', ###, name='article_view'),
     path('article/add/', ###, name='article_add'),
     path('article/<int:pk>/update/', ###, name='article_update'),
-    path('article/<int:pk>/delete/', ### , name='article_delete'),
+    path('article/<int:pk>/delete/',### , name='article_delete'),
 ]
