@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block menu %}
+    <li><a href="{% url 'article_update' article.pk %}">Edit</a></li>
+    <li><a href="{% url 'article_delete' article.pk %}">Delete</a></li>
+{% endblock %}
+
+{% block content %}
+    <h1>{{ article.title }}</h1>
+    <p>Created by {{ article.author }} ({{ article.category|default_if_none:'Без категории' }})
+            at {{ article.created_at|date:'d.m.Y H:i:s' }}</p>
+    <div class="pre">{{ article.text }}</div>
+        <p>
+            <a href="{% url 'article_view' article.pk %}">More...</a>
+            <a href="{% url 'article_update' article.pk %}">Edit</a>
+            <a href="{% url "article_delete" article.pk %}">Delete</a>
+        </p>
+{% endblock %}

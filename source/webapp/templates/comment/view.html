@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block menu %}
+    <li><a href="{% url 'comment_update' comment.pk %}">Edit</a></li>
+    <li><a href="{% url 'comment_delete' comment.pk %}">Delete</a></li>
+{% endblock %}
+
+{% block content %}
+    <h1>{{ comment.text }}</h1>
+    <p>Created by {{ comment.author }} ({{ comment.category|default_if_none:'Без категории' }})
+            at {{ comment.created_at|date:'d.m.Y H:i:s' }}</p>
+        <p>
+            <a href="{% url 'comment_view' comment.pk %}">More...</a>
+            <a href="{% url 'comment_update' comment.pk %}">Edit</a>
+            <a href="{% url "comment_delete" comment.pk %}">Delete</a>
+        </p>
+{% endblock %}

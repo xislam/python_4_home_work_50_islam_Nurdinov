@@ -94,7 +94,17 @@ class CommentCreateView(View):
 
             return redirect('comment_view', pk=comment.pk)
         else:
-            return render(request, 'comment_create.html', context={'form': form})
+            return render(request, 'comment/create.html', context={'form': form})
+
+
+class CommentView(TemplateView):
+    template_name = 'comment/comment.html'
+
+    def get_context_data(self, **kwargs):
+        pk = kwargs.get('pk')
+        context = super().get_context_data(**kwargs)
+        context['comments'] = get_object_or_404(Comment, pk=pk)
+        return context
 
 
 class CommentUpdateView(TemplateView):
@@ -104,7 +114,7 @@ class CommentUpdateView(TemplateView):
         form = CommentForm(data={'author': comment.author,
                                  'text': comment.text,
                                  'article': comment.article})
-        return render(request, 'comment_update.html', context={'form': form, 'comment': comment})
+        return render(request, 'comment/update.html', context={'form': form, 'comment': comment})
 
     def post(self, request, **kwargs):
         comments = get_object_or_404(Comment, pk=kwargs['pk'])
@@ -115,15 +125,15 @@ class CommentUpdateView(TemplateView):
             comments.text = data['text']
             comments.article = data['article']
             comments.save()
-            return redirect('comment_view')
+            return redirect('comment_view',  pk=comments.pk)
         else:
-            return render(request, 'comment_update.html', context={'form': form})
+            return render(request, 'comment/update.html', context={'form': form})
 
 
 class CommentDeleteView(TemplateView):
     def get(self, request, *args, **kwargs):
         comments = get_object_or_404(Comment, pk=kwargs['pk'])
-        return render(request, 'comment_delete.html', context={'comment': comments})
+        return render(request, 'comment/delete.html', context={'comment': comments})
 
     def post(self, request, **kwargs):
         comment = get_object_or_404(Comment, pk=kwargs['pk'])

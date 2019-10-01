@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Delete Comment{% endblock %}
+{% block menu %}
+    <li><a class="navbar-brand"  href="{% url 'comment_view' %}">View</a></li>
+{% endblock %}
+{% block content %}
+    <h1>Are you sure want to delete type "{{ comment }}"?</h1>
+    <form method="POST" action="{% url "comment_delete" comment.pk %}" class="text-center">
+        {% csrf_token %}
+        <p><input type="submit" value="Confirm"></p>
+        <p><a href="{% url "index" %}">Cancel</a></p>
+    </form>
+{% endblock %}
